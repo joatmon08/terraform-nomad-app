@@ -21,6 +21,7 @@ variable "node_pool" {
 variable "driver" {
   type        = string
   description = "Nomad driver to run application"
+  default     = "docker"
   validation {
     condition     = contains(["exec", "docker"], var.driver)
     error_message = "Must be of `exec` or `docker` driver"
