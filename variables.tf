@@ -11,13 +11,11 @@ variable "application_port" {
 variable "application_count" {
   type        = number
   description = "Number of instances for application"
-  default     = 1
 }
 
 variable "node_pool" {
   type        = string
   description = "Node pool for application"
-  default     = "default"
 }
 
 variable "driver" {
@@ -56,13 +54,11 @@ variable "args" {
 variable "metadata" {
   type        = map(string)
   description = "Metadata for application"
-  default     = {}
 }
 
 variable "environment_variables" {
   type        = map(string)
   description = "Environment variables for application"
-  default     = {}
 }
 
 variable "image" {
@@ -73,7 +69,6 @@ variable "image" {
 variable "service_provider" {
   type        = string
   description = "Nomad service provider, must be consul or nomad"
-  default     = "consul"
   validation {
     condition     = contains(["consul", "nomad"], var.service_provider)
     error_message = "Must be of `consul` or `nomad` provider"
