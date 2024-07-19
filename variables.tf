@@ -54,12 +54,20 @@ variable "args" {
 
 variable "metadata" {
   type        = map(string)
-  description = "Metadata for application"
+  description = "Additional metadata for application"
+  default     = {}
+}
+
+variable "waypoint_template" {
+  type        = string
+  description = "Waypoint template for metadata tracking"
+  default     = null
 }
 
 variable "environment_variables" {
   type        = map(string)
   description = "Environment variables for application"
+  default     = {}
 }
 
 variable "image" {

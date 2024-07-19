@@ -9,6 +9,9 @@ variables {
   metadata = {
     "test" = "123"
   }
+  node_pool         = "default"
+  application_count = 1
+  service_provider  = "nomad"
 }
 
 run "docker_job_spec" {
@@ -31,7 +34,7 @@ run "docker_job_spec" {
   }
 
   assert {
-    condition     = jsondecode(nomad_job.application.jobspec).Meta == {"test" = "123"}
+    condition     = jsondecode(nomad_job.application.jobspec).Meta == { "test" = "123" }
     error_message = "Job spec metadata should have 1"
   }
 
