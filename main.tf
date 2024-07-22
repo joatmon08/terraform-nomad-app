@@ -3,9 +3,9 @@ locals {
     NAME    = var.waypoint_application
     MESSAGE = "Hello from ${var.waypoint_application}"
   }, var.environment_variables) : var.environment_variables
-  metadata = var.waypoint_template != null ? merge({
-    "waypoint.provisioned" = "true"
-    "waypoint.template"    = var.waypoint_template
+  metadata = var.waypoint_additional_details != null ? merge({
+    "waypoint.provisioned"        = "true"
+    "waypoint.additional_details" = var.waypoint_additional_details
   }, var.metadata) : var.metadata
 }
 

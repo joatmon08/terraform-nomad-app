@@ -1,18 +1,19 @@
 variables {
-  waypoint_application = "test-app"
-  application_port = 9090
-  application_count = 1
+  waypoint_application        = "test-app"
+  waypoint_additional_details = null
+  application_port            = 9090
+  application_count           = 1
   environment_variables = {
     "LISTEN_ADDR"   = "0.0.0.0:19090"
     "UPSTREAM_URIS" = "10.0.0.2:8080"
   }
-  image            = "test-image"
+  image = "test-image"
 
   metadata = {
     "test" = "123"
   }
-  node_pool         = "default"
-  service_provider  = "nomad"
+  node_pool        = "default"
+  service_provider = "nomad"
 }
 
 run "docker_job_spec" {

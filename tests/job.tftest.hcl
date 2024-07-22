@@ -1,11 +1,12 @@
 variables {
-  waypoint_application = "fake-service"
-  application_port     = 9090
-  application_count    = 1
-  image                = "nicholasjackson/fake-service:v0.26.2"
-  driver               = "docker"
-  service_provider     = "nomad"
-  node_pool            = "default"
+  waypoint_application        = "fake-service"
+  waypoint_additional_details = null
+  application_port            = 9090
+  application_count           = 1
+  image                       = "nicholasjackson/fake-service:v0.26.2"
+  driver                      = "docker"
+  service_provider            = "nomad"
+  node_pool                   = "default"
 }
 
 run "run_job" {}

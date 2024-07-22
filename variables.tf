@@ -58,10 +58,9 @@ variable "metadata" {
   default     = {}
 }
 
-variable "waypoint_template" {
+variable "waypoint_additional_details" {
   type        = string
-  description = "Waypoint template for metadata tracking"
-  default     = null
+  description = "Waypoint additional details added to Nomad metadata"
 }
 
 variable "environment_variables" {
