@@ -1,7 +1,7 @@
 locals {
   environment_variables = strcontains(var.image, "fake-service") ? merge({
-    NAME    = var.application_name
-    MESSAGE = "Hello from ${var.application_name}"
+    NAME    = var.waypoint_application
+    MESSAGE = "Hello from ${var.waypoint_application}"
   }, var.environment_variables) : var.environment_variables
   metadata = var.waypoint_template != null ? merge({
     "waypoint.provisioned" = "true"
@@ -11,7 +11,7 @@ locals {
 
 data "nomad_job_parser" "application" {
   hcl = templatefile("${path.module}/templates/jobspec.hcl", {
-    application_name      = var.application_name
+    application_name      = var.waypoint_application
     application_port      = var.application_port
     application_count     = var.application_count
     node_pool             = var.node_pool

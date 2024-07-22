@@ -1,4 +1,4 @@
-variable "application_name" {
+variable "waypoint_application" {
   type        = string
   description = "Name of application"
 }

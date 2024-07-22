@@ -1,16 +1,17 @@
 variables {
-  application_name = "test-app"
+  waypoint_application = "test-app"
+  application_port = 9090
+  application_count = 1
   environment_variables = {
     "LISTEN_ADDR"   = "0.0.0.0:19090"
     "UPSTREAM_URIS" = "10.0.0.2:8080"
   }
-  image            = "nicholasjackson/fake-service:v0.26.2"
-  application_port = 9090
+  image            = "test-image"
+
   metadata = {
     "test" = "123"
   }
   node_pool         = "default"
-  application_count = 1
   service_provider  = "nomad"
 }
 
@@ -39,7 +40,7 @@ run "docker_job_spec" {
   }
 
   assert {
-    condition     = jsondecode(nomad_job.application.jobspec).TaskGroups.0.Tasks.0.Config.image == "nicholasjackson/fake-service:v0.26.2"
+    condition     = jsondecode(nomad_job.application.jobspec).TaskGroups.0.Tasks.0.Config.image == "test-image"
     error_message = "Job spec image should be fake-service"
   }
 

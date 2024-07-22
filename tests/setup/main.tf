@@ -1,4 +1,4 @@
-variable "application_name" {
+variable "waypoint_application" {
   type        = string
   description = "Name of application"
 }
@@ -8,6 +8,6 @@ resource "time_sleep" "wait_30_seconds" {
 }
 
 data "nomad_job" "test" {
-  job_id    = var.application_name
+  job_id    = var.waypoint_application
   depends_on = [ time_sleep.wait_30_seconds ]
 }
