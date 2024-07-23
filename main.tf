@@ -5,7 +5,7 @@ locals {
   }, var.environment_variables) : var.environment_variables
   metadata = var.waypoint_additional_details != null ? merge({
     "waypoint.provisioned"        = "true"
-    "waypoint.additional_details" = var.waypoint_additional_details
+    "waypoint.additional_details" = "${var.waypoint_additional_details}"
   }, var.metadata) : var.metadata
 }
 

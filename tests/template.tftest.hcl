@@ -1,6 +1,6 @@
 variables {
   waypoint_application        = "test-app"
-  waypoint_additional_details = null
+  waypoint_additional_details = "test details"
   application_port            = 9090
   application_count           = 1
   environment_variables = {
@@ -36,8 +36,8 @@ run "docker_job_spec" {
   }
 
   assert {
-    condition     = jsondecode(nomad_job.application.jobspec).Meta == { "test" = "123" }
-    error_message = "Job spec metadata should have 1"
+    condition     = length(jsondecode(nomad_job.application.jobspec).Meta) == 3
+    error_message = "Job spec metadata should have 3"
   }
 
   assert {

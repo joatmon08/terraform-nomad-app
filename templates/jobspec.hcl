@@ -2,9 +2,9 @@ job "${application_name}" {
   type        = "service"
   node_pool = "${node_pool}"
 
-  meta {
+  meta = {
     %{ for key in keys(metadata) ~}
-    ${key} = "${metadata[key]}"
+    "${key}" = "${metadata[key]}"
     %{ endfor ~}
   }
 
