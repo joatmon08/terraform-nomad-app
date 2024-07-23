@@ -44,10 +44,21 @@ job "${application_name}" {
         memory = ${memory}
       }
 
-      env {
-        %{ for key in keys(environment_variables) ~}
-        ${key} = "${environment_variables[key]}"
-        %{ endfor ~}
+      template {
+        data        = <<EOF
+{{- range nomadVarListSafe }}
+  {{- if nomadVarExists .Path }}
+    {{- with nomadVar .Path }}
+      {{- range .Tuples }}
+{{ .K }}={{ .V | toJSON }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+        EOF
+        env         = true
+        change_mode = "restart"
+        destination = "local/file.env"
       }
     }
   }

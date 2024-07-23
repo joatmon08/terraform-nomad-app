@@ -31,8 +31,13 @@ run "docker_job_spec" {
   }
 
   assert {
-    condition     = length(jsondecode(nomad_job.application.jobspec).TaskGroups.0.Tasks.0.Env) == 2
-    error_message = "Job spec environment variables should have 2"
+    condition     = length(jsondecode(nomad_job.application.jobspec).TaskGroups.0.Tasks.0.Templates) == 1
+    error_message = "Task should have 1 template for environment variables"
+  }
+
+  assert {
+    condition     = jsondecode(nomad_job.application.jobspec).TaskGroups.0.Tasks.0.Env == null
+    error_message = "Job spec environment variables should be null"
   }
 
   assert {
@@ -69,8 +74,8 @@ run "exec_job_spec" {
   }
 
   assert {
-    condition     = length(jsondecode(nomad_job.application.jobspec).TaskGroups.0.Tasks.0.Env) == 2
-    error_message = "Job spec environment variables should have 2"
+    condition     = jsondecode(nomad_job.application.jobspec).TaskGroups.0.Tasks.0.Env == null
+    error_message = "Job spec environment variables should be null"
   }
 
   assert {
