@@ -1,6 +1,7 @@
 variables {
   waypoint_application        = "test-app"
   waypoint_additional_details = "test details"
+  nomad_additional_details    = "test variable details"
   application_port            = 9090
   application_count           = 1
   environment_variables = {
@@ -24,6 +25,11 @@ run "docker_job_spec" {
   }
 
   command = plan
+
+  assert {
+    condition     = length(nomad_variable.application.items) == 3
+    error_message = "S"
+  }
 
   assert {
     condition     = jsondecode(nomad_job.application.jobspec).Name == "test-app"

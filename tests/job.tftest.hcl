@@ -1,6 +1,7 @@
 variables {
   waypoint_application        = "fake-service"
   waypoint_additional_details = null
+  nomad_additional_details    = null
   application_port            = 9090
   application_count           = 1
   image                       = "nicholasjackson/fake-service:v0.26.2"

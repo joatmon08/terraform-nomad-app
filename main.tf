@@ -1,8 +1,15 @@
 locals {
+  clue = {
+    "CLUE" = var.nomad_additional_details
+  }
+
+  nomad_vars = merge(var.environment_variables, local.clue)
+
   environment_variables = strcontains(var.image, "fake-service") ? merge({
     NAME    = var.waypoint_application
     MESSAGE = "Hello from ${var.waypoint_application}"
-  }, var.environment_variables) : var.environment_variables
+  }, local.nomad_vars) : local.nomad_vars
+
   metadata = var.waypoint_additional_details != null ? merge({
     "waypoint.provisioned"        = "true"
     "waypoint.additional_details" = "${var.waypoint_additional_details}"
