@@ -1,10 +1,8 @@
 locals {
-  nomad_vars = var.environment_variables
-
   environment_variables = contains(keys(var.applications), var.waypoint_application) ? merge({
     NAME    = var.waypoint_application
     MESSAGE = var.applications[var.waypoint_application].nomad_clues
-  }, local.nomad_vars) : local.nomad_vars
+  }, var.environment_variables) : var.environment_variables
 
   metadata = var.waypoint_additional_details != null ? merge({
     "waypoint.provisioned"        = "true"
@@ -29,8 +27,9 @@ data "nomad_job_parser" "application" {
   })
   canonicalize = false
 }
+
 resource "nomad_variable" "application" {
-  count = length(local.environment_variables) > 0
+  count = length(local.environment_variables) != 0 ? 1 : 0
   path  = "nomad/jobs/${nomad_job.application.id}"
   items = local.environment_variables
 }

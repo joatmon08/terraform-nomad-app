@@ -4,10 +4,6 @@ variables {
   nomad_additional_details    = "test variable details"
   application_port            = 9090
   application_count           = 1
-  environment_variables = {
-    "LISTEN_ADDR"   = "0.0.0.0:19090"
-    "UPSTREAM_URIS" = "10.0.0.2:8080"
-  }
   image = "test-image"
 
   metadata = {
@@ -28,8 +24,8 @@ run "docker_job_spec" {
   command = plan
 
   assert {
-    condition     = length(nomad_variable.application.items) == 2
-    error_message = "Should have 2 nomad variables set"
+    condition     = length(nomad_variable.application) == 0
+    error_message = "Should have no nomad variables set"
   }
 
   assert {
@@ -86,8 +82,8 @@ run "docker_job_variables_override" {
   command = plan
 
   assert {
-    condition     = length(nomad_variable.application.items) == 4
-    error_message = "Should have 4 nomad variables set"
+    condition     = length(nomad_variable.application.0.items) == 2
+    error_message = "Should have 2 nomad variables set"
   }
 }
 
