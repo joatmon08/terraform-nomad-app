@@ -91,4 +91,5 @@ variable "applications" {
     port           = number
   }))
   description = "Applications and configuration attributes"
+  default     = null
 }
