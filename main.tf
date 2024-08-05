@@ -30,6 +30,7 @@ data "nomad_job_parser" "application" {
   canonicalize = false
 }
 resource "nomad_variable" "application" {
+  count = length(local.environment_variables) > 0
   path  = "nomad/jobs/${nomad_job.application.id}"
   items = local.environment_variables
 }
