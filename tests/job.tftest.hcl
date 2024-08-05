@@ -8,6 +8,14 @@ variables {
   driver                      = "docker"
   service_provider            = "nomad"
   node_pool                   = "default"
+  applications = {
+    "fake-service" = {
+      waypoint_clues = "TODO: waypoint clue"
+      nomad_clues    = "TODO: nomad clue"
+      node_pool      = "containers"
+      port           = 9090
+    },
+  }
 }
 
 run "run_job" {}

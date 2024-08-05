@@ -15,6 +15,7 @@ variables {
   }
   node_pool        = "default"
   service_provider = "nomad"
+  applications     = {}
 }
 
 run "docker_job_spec" {
@@ -27,8 +28,8 @@ run "docker_job_spec" {
   command = plan
 
   assert {
-    condition     = length(nomad_variable.application.items) == 3
-    error_message = "S"
+    condition     = length(nomad_variable.application.items) == 2
+    error_message = "Should have 2 nomad variables set"
   }
 
   assert {
@@ -64,6 +65,29 @@ run "docker_job_spec" {
   assert {
     condition     = jsondecode(nomad_job.application.jobspec).TaskGroups.0.Tasks.0.Config.args == ["30"]
     error_message = "Job spec args should be `[\"30\"]`"
+  }
+}
+
+run "docker_job_variables_override" {
+  variables {
+    driver  = "docker"
+    command = "sleep"
+    args    = ["30"]
+    applications = {
+      "test-app" = {
+        waypoint_clues = "TODO: waypoint clue"
+        nomad_clues    = "TODO: nomad clue"
+        node_pool      = "containers"
+        port           = 9090
+      },
+    }
+  }
+
+  command = plan
+
+  assert {
+    condition     = length(nomad_variable.application.items) == 4
+    error_message = "Should have 4 nomad variables set"
   }
 }
 

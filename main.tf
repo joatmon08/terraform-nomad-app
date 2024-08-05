@@ -1,13 +1,9 @@
 locals {
-  clue = {
-    "CLUE" = var.nomad_additional_details
-  }
+  nomad_vars = var.environment_variables
 
-  nomad_vars = merge(var.environment_variables, local.clue)
-
-  environment_variables = strcontains(var.image, "fake-service") ? merge({
+  environment_variables = contains(keys(var.applications), var.waypoint_application) ? merge({
     NAME    = var.waypoint_application
-    MESSAGE = "Hello from ${var.waypoint_application}"
+    MESSAGE = var.applications[var.waypoint_application].nomad_clues
   }, local.nomad_vars) : local.nomad_vars
 
   metadata = var.waypoint_additional_details != null ? merge({
@@ -33,7 +29,6 @@ data "nomad_job_parser" "application" {
   })
   canonicalize = false
 }
-
 resource "nomad_variable" "application" {
   path  = "nomad/jobs/${nomad_job.application.id}"
   items = local.environment_variables
