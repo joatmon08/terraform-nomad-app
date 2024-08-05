@@ -24,13 +24,14 @@ data "nomad_job_parser" "application" {
     image             = var.image
     service_provider  = var.service_provider
     metadata          = local.metadata
+    has_nomad_vars    = length(nomad_variable.application) > 0
   })
   canonicalize = false
 }
 
 resource "nomad_variable" "application" {
   count = length(local.environment_variables) != 0 ? 1 : 0
-  path  = "nomad/jobs/${nomad_job.application.id}"
+  path  = "nomad/jobs/${var.waypoint_application}"
   items = local.environment_variables
 }
 

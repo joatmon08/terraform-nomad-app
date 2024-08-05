@@ -34,8 +34,8 @@ run "docker_job_spec" {
   }
 
   assert {
-    condition     = length(jsondecode(nomad_job.application.jobspec).TaskGroups.0.Tasks.0.Templates) == 1
-    error_message = "Task should have 1 template for environment variables"
+    condition     = jsondecode(nomad_job.application.jobspec).TaskGroups.0.Tasks.0.Templates == null
+    error_message = "Task should have no templates"
   }
 
   assert {

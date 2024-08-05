@@ -44,6 +44,7 @@ job "${application_name}" {
         memory = ${memory}
       }
 
+%{ if has_nomad_vars }
       template {
         data        = <<EOF
 {{- range nomadVarListSafe }}
@@ -60,6 +61,7 @@ job "${application_name}" {
         change_mode = "restart"
         destination = "local/file.env"
       }
+%{ endif }
     }
   }
 }
