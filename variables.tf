@@ -58,11 +58,6 @@ variable "metadata" {
   default     = {}
 }
 
-variable "waypoint_additional_details" {
-  type        = string
-  description = "Waypoint additional details added to Nomad metadata"
-}
-
 variable "environment_variables" {
   type        = map(string)
   description = "Environment variables for application"
@@ -77,19 +72,5 @@ variable "image" {
 variable "service_provider" {
   type        = string
   description = "Nomad service provider, must be consul or nomad"
-  validation {
-    condition     = contains(["consul", "nomad"], var.service_provider)
-    error_message = "Must be of `consul` or `nomad` provider"
-  }
-}
-
-variable "applications" {
-  type = map(object({
-    waypoint_clues = string
-    nomad_clues    = string
-    node_pool      = string
-    port           = number
-  }))
-  description = "Applications and configuration attributes"
-  default     = null
+  default     = "nomad"
 }
